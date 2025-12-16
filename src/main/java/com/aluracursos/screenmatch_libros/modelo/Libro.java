@@ -92,9 +92,9 @@ public class Libro {
     public String toString() {
         return "LIBROS" +
                 "\n************\n" +
-                "Título ='" + titulo +
-                "\nIdiomas ='" + idiomas  +
-                "\nCantidad de descargas =" + cantidadDescargas +
+                "Título = " + titulo +
+                "\nIdiomas = " + idiomas  +
+                "\nCantidad de descargas = " + cantidadDescargas +
                 "\n************\n";
     }
 }

@@ -124,16 +124,41 @@ public class LibreriaService {
         }
     }
 
-   public void listarLibros(){
-        librosRepositorio.findAll().forEach(System.out::println);
-   }
+    public void listarLibros() {
+        librosRepositorio.findAll().forEach(libro -> {
+
+            String idiomasOriginal = libro.getIdiomas();
+
+            String idiomasEnum = Arrays.stream(idiomasOriginal.split(","))
+                    .map(String::trim)
+                    .map(codigo -> {
+                        try {
+                            return Idiomas.fromCodigo(codigo).name();
+                        } catch (IllegalArgumentException e) {
+                            return null; // ignoramos idiomas desconocidos
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.joining(", "));
+
+            if (idiomasEnum.isBlank()) {
+                idiomasEnum = "No disponible";
+            }
+
+            libro.setIdiomas(idiomasEnum);
+            System.out.println(libro);
+            libro.setIdiomas(idiomasOriginal);
+        });
+    }
+
 
     public void listarAutores() {
         autorRepositorio.findAll().forEach(System.out::println);
     }
 
     public void listarAutorPorDeterminadoAnio(int anio) {
-        autorRepositorio.listarPorFecha(anio).forEach(System.out::println);
+        autorRepositorio.listarPorFecha(anio).
+                forEach(System.out::println);
 
     }
 
